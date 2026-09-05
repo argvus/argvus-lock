@@ -34,6 +34,27 @@ read_state() {
   fi
 }
 
+font_state_value() {
+  _key="$1"
+  _fallback="$2"
+  _fonts_file="${ARGVUS_CONFIG_HOME}/argvus/fonts.conf"
+
+  if [ -f "$_fonts_file" ]; then
+    awk -F= -v key="$_key" '
+      $1 == key {
+        sub(/^[^=]*=/, "")
+        gsub(/^[[:space:]]+|[[:space:]]+$/, "")
+        print
+        found = 1
+        exit
+      }
+      END { exit found ? 0 : 1 }
+    ' "$_fonts_file" 2>/dev/null && return 0
+  fi
+
+  printf '%s\n' "$_fallback"
+}
+
 THEME="$(read_state "$ACTIVE_FILE" argvus-dark-aether)"
 case "$THEME" in
   argvus-dark-aether|argvus-dark-aether-float) DEFAULT_ACCENT="3590bd" ;;
@@ -72,6 +93,17 @@ TEMP_FILE="${TARGET_FILE}.theme.$$"
 cp "$THEME_FILE" "$TEMP_FILE"
 sed -i "s|^[[:space:]]*path = .*hyprlock-wallpaper-blur.png|  path = ${LOCK_WALLPAPER}|" "$TEMP_FILE"
 sed -i "s|^[[:space:]]*outer_color = .*|  outer_color = rgb(${ACCENT})|" "$TEMP_FILE"
+LOCK_FONT="$(font_state_value default_name "Terminus (TTF)")"
+TEMP_FONT_FILE="${TARGET_FILE}.font.$$"
+awk -v font="$LOCK_FONT" '
+  /^[[:space:]]*font_family[[:space:]]*=/ {
+    sub(/=.*/, "= " font)
+    print
+    next
+  }
+  { print }
+' "$TEMP_FILE" >"$TEMP_FONT_FILE" && mv "$TEMP_FONT_FILE" "$TEMP_FILE"
+rm -f "$TEMP_FONT_FILE"
 mv "$TEMP_FILE" "$TARGET_FILE"
 
 if [ "${1:-}" = "--invalidate" ]; then
