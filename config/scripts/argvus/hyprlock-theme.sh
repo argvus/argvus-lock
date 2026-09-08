@@ -93,7 +93,7 @@ TEMP_FILE="${TARGET_FILE}.theme.$$"
 cp "$THEME_FILE" "$TEMP_FILE"
 sed -i "s|^[[:space:]]*path = .*hyprlock-wallpaper-blur.png|  path = ${LOCK_WALLPAPER}|" "$TEMP_FILE"
 sed -i "s|^[[:space:]]*outer_color = .*|  outer_color = rgb(${ACCENT})|" "$TEMP_FILE"
-LOCK_FONT="$(font_state_value system_name "$(font_state_value default_name "Terminus (TTF) Bold")")"
+LOCK_FONT="$(font_state_value system_name "$(font_state_value default_name "IBM Plex Mono")")"
 TEMP_FONT_FILE="${TARGET_FILE}.font.$$"
 awk -v font="$LOCK_FONT" '
   /^[[:space:]]*font_family[[:space:]]*=/ {
