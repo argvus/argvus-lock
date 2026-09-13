@@ -17,7 +17,7 @@ help:
 
 install:
 	$(INSTALL) -dm755 "$(DESTDIR)$(PREFIX)/share/argvus"
-	cp -a config/. "$(DESTDIR)$(PREFIX)/share/argvus/"
+	cp -a src/. "$(DESTDIR)$(PREFIX)/share/argvus/"
 	find "$(DESTDIR)$(PREFIX)/share/argvus/scripts" -type f -name '*.sh' -exec chmod 755 {} \; 2>/dev/null || true
 	$(INSTALL) -Dm644 LICENSE \
 		"$(DESTDIR)$(PREFIX)/share/licenses/argvus-lock/LICENSE"
@@ -25,14 +25,14 @@ install:
 uninstall:
 	$(RM) "$(DESTDIR)$(PREFIX)/share/argvus/hypr/hyprlock.conf"
 	$(RM) "$(DESTDIR)$(PREFIX)/share/argvus/scripts/argvus/hyprlock-theme.sh"
-	for theme in src/usr/share/argvus/hypr/themes/*; do \
+	for theme in src/hypr/themes/*; do \
 		$(RM) "$(DESTDIR)$(PREFIX)/share/argvus/hypr/themes/$${theme##*/}/hyprlock.conf"; \
 	done
 	$(RM) "$(DESTDIR)$(PREFIX)/share/licenses/argvus-lock/LICENSE"
 
 validate:
 	@set -eu; \
-	scripts=$$(find config -type f -name '*.sh' | sort); \
+	scripts=$$(find src -type f -name '*.sh' | sort); \
 	if [ -n "$$scripts" ]; then \
 		for script in $$scripts; do sh -n "$$script"; done; \
 		if command -v shellcheck >/dev/null 2>&1; then \
@@ -41,7 +41,7 @@ validate:
 			echo "shellcheck not found; skipped"; \
 		fi; \
 	fi; \
-	configs=$$(find config/hypr -type f -name 'hyprlock.conf' | sort); \
+	configs=$$(find src/hypr -type f -name 'hyprlock.conf' | sort); \
 	test -n "$$configs"; \
 	for conf in $$configs; do \
 		grep -q '^background {' "$$conf"; \
@@ -49,7 +49,7 @@ validate:
 		grep -q '^label {' "$$conf"; \
 		grep -q 'hyprlock-wallpaper-blur.png' "$$conf"; \
 	done; \
-	count=$$(find config/hypr/themes -mindepth 2 -maxdepth 2 -type f -name 'hyprlock.conf' | wc -l); \
+	count=$$(find src/hypr/themes -mindepth 2 -maxdepth 2 -type f -name 'hyprlock.conf' | wc -l); \
 	if [ "$$count" -ne 10 ]; then \
 		echo "expected 10 lock theme templates, found $$count" >&2; \
 		exit 1; \
