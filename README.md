@@ -13,9 +13,9 @@ Read the ecosystem plan first:
 
 This package owns:
 
-- `/usr/share/argvus/hypr/hyprlock.conf`
-- `/usr/share/argvus/hypr/themes/*/hyprlock.conf`
-- `/usr/share/argvus/scripts/argvus/hyprlock-theme.sh`
+- `/usr/share/argvus/lock/config/hyprlock.conf`
+- `/usr/share/argvus/lock/config/themes/*/hyprlock.conf`
+- `/usr/share/argvus/lock/sh/hyprlock-theme.sh`
 
 `argvus-appearance` owns shared visual inputs such as wallpapers, active theme
 state and accent color state. `argvus-lock` reads those inputs through the

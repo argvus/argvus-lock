@@ -5,14 +5,14 @@
 
 set -eu
 
-ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}/scripts/argvus/bootstrap.sh}"
+ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}/session/sh/bootstrap.sh}"
 . "$ARGVUS_BOOTSTRAP"
 ARGVUS_MUTABLE_CONFIG=1
 
 STATE_DIR="${ARGVUS_CONFIG_HOME}/argvus"
 ACTIVE_FILE="${STATE_DIR}/.active-theme"
 ACCENT_FILE="${STATE_DIR}/.accent-color"
-TARGET_FILE="$(paths_config hypr/hyprlock.conf)"
+TARGET_FILE="$(paths_config lock/config/hyprlock.conf)"
 SYSTEM_CONFIG="${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}"
 LOCK_WALLPAPER="$(paths_cache hypr)/hyprlock-wallpaper-blur.png"
 
@@ -68,9 +68,9 @@ case "$THEME" in
     ;;
 esac
 
-THEME_FILE="$(paths_config "hypr/themes/${THEME}/hyprlock.conf")"
+THEME_FILE="$(paths_config "lock/config/themes/${THEME}/hyprlock.conf")"
 if [ ! -f "$THEME_FILE" ]; then
-  THEME_FILE="${SYSTEM_CONFIG}/hypr/themes/${THEME}/hyprlock.conf"
+  THEME_FILE="/lock/config/themes/${THEME}/hyprlock.conf"
 fi
 if [ ! -f "$THEME_FILE" ]; then
   printf 'Hyprlock theme not found: %s\n' "$THEME" >&2
