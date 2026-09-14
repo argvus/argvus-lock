@@ -70,7 +70,7 @@ esac
 
 THEME_FILE="$(paths_config "lock/config/themes/${THEME}/hyprlock.conf")"
 if [ ! -f "$THEME_FILE" ]; then
-  THEME_FILE="/lock/config/themes/${THEME}/hyprlock.conf"
+  THEME_FILE="$SYSTEM_CONFIG/lock/config/themes/${THEME}/hyprlock.conf"
 fi
 if [ ! -f "$THEME_FILE" ]; then
   printf 'Hyprlock theme not found: %s\n' "$THEME" >&2
