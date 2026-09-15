@@ -8,6 +8,8 @@ set -eu
 ARGVUS_BOOTSTRAP="${ARGVUS_BOOTSTRAP:-${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}/session/sh/bootstrap.sh}"
 . "$ARGVUS_BOOTSTRAP"
 ARGVUS_MUTABLE_CONFIG=1
+# shellcheck source=/usr/share/argvus/lib/i18n.sh
+. /usr/share/argvus/lib/i18n.sh
 
 STATE_DIR="${ARGVUS_CONFIG_HOME}/argvus"
 ACTIVE_FILE="${STATE_DIR}/.active-theme"
@@ -19,7 +21,7 @@ LOCK_WALLPAPER="$(paths_cache hypr)/hyprlock-wallpaper-blur.png"
 case "${1:-}" in
   ''|--invalidate) ;;
   *)
-    printf 'Usage: hyprlock-theme.sh [--invalidate]\n' >&2
+    printf '%s\n' "$(argvus_tr lock usage)" >&2
     exit 1
     ;;
 esac
@@ -63,7 +65,7 @@ case "$THEME" in
   argvus-dark-slate|argvus-dark-slate-float) DEFAULT_ACCENT="7391a5" ;;
   argvus-dark-universe|argvus-dark-universe-float) DEFAULT_ACCENT="eeeeee" ;;
   *)
-    printf 'Invalid active theme for Hyprlock: %s\n' "$THEME" >&2
+    printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
     exit 1
     ;;
 esac
@@ -73,7 +75,7 @@ if [ ! -f "$THEME_FILE" ]; then
   THEME_FILE="$SYSTEM_CONFIG/lock/config/themes/${THEME}/hyprlock.conf"
 fi
 if [ ! -f "$THEME_FILE" ]; then
-  printf 'Hyprlock theme not found: %s\n' "$THEME" >&2
+  printf '%s\n' "$(argvus_tr lock theme_not_found theme="$THEME")" >&2
   exit 1
 fi
 
@@ -93,6 +95,8 @@ TEMP_FILE="${TARGET_FILE}.theme.$$"
 cp "$THEME_FILE" "$TEMP_FILE"
 sed -i "s|^[[:space:]]*path = .*hyprlock-wallpaper-blur.png|  path = ${LOCK_WALLPAPER}|" "$TEMP_FILE"
 sed -i "s|^[[:space:]]*outer_color = .*|  outer_color = rgb(${ACCENT})|" "$TEMP_FILE"
+PASSWORD_PLACEHOLDER="$(argvus_tr lock password_placeholder)"
+sed -i "s|__ARGVUS_LOCK_PASSWORD__|${PASSWORD_PLACEHOLDER}|g" "$TEMP_FILE"
 LOCK_FONT="$(font_state_value system_name "$(font_state_value default_name "IBM Plex Mono")")"
 TEMP_FONT_FILE="${TARGET_FILE}.font.$$"
 awk -v font="$LOCK_FONT" '
@@ -120,4 +124,4 @@ if [ "${1:-}" = "--invalidate" ]; then
   [ -n "$_lock_wallpaper" ] && rm -f "$_lock_wallpaper"
 fi
 
-printf 'Hyprlock theme %s applied with accent #%s.\n' "$THEME" "$ACCENT"
+printf '%s\n' "$(argvus_tr lock theme_applied theme="$THEME" accent="$ACCENT")"

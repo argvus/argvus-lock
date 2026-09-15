@@ -8,6 +8,7 @@ url="https://github.com/argvus/argvus-lock"
 license=('GPL-3.0-only')
 depends=(
   'argvus-appearance'
+  'argvus-i18n'
   'argvus-session'
   'hyprlock'
   'ttf-jetbrains-mono-nerd'
