@@ -1,0 +1,21 @@
+{
+  "files.trimTrailingWhitespace": true,
+  "files.eol": "\n",
+  "files.insertFinalNewline": true,
+  "files.associations": {
+    "*.md": "markdown",
+    "*.sh": "shellscript",
+    "Makefile": "makefile",
+    "LICENSE": "plaintext",
+    "cspell.json": "json"
+  },
+  "editor.rulers": [80],
+  "[markdown]": {
+    "editor.rulers": [100]
+  },
+  "[github-actions-workflow]": {
+    "editor.defaultFormatter": "redhat.vscode-yaml"
+  },
+  "makefile.configureOnOpen": true,
+  "cSpell.language": "en"
+}

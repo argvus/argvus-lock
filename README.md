@@ -1,49 +1,45 @@
+<!-- ARGVUS Arch Linux package repository. -->
+
 # argvus-lock
 
-Hyprlock configuration, lock screen theme templates and lock-theme apply
-helpers for the ARGVUS Desktop Environment.
+Hyprlock configuration, lock-screen theme templates, and the theme-application
+helper for the ARGVUS desktop environment.
 
-Read the ecosystem plan first:
+This repository owns the files installed below `/usr/share/argvus/lock/`:
 
-```text
-/home/boss/Projects/github/organizations/argvus/argvus-session/tmp/AGENT_PLAN.md
-```
+- `config/hyprlock.conf`;
+- `config/themes/*/hyprlock.conf`; and
+- `sh/hyprlock-theme.sh`.
 
-## Ownership
+`argvus-appearance` owns shared visual inputs such as wallpaper, active-theme,
+and accent-color state. `argvus-power` owns idle timeout, lock-menu, suspend,
+and DPMS policy and calls this package's helper before invoking `hyprlock`.
 
-This package owns:
+## Build and install
 
-- `/usr/share/argvus/lock/config/hyprlock.conf`
-- `/usr/share/argvus/lock/config/themes/*/hyprlock.conf`
-- `/usr/share/argvus/lock/sh/hyprlock-theme.sh`
-
-`argvus-appearance` owns shared visual inputs such as wallpapers, active theme
-state and accent color state. `argvus-lock` reads those inputs through the
-existing ARGVUS path/bootstrap helpers and rebuilds the generated Hyprlock
-config at `~/.config/argvus/hypr/hyprlock.conf`.
-
-`argvus-power` owns idle timeout, lock menu, suspend flow and DPMS policy. It
-should call `hyprlock-theme.sh` before invoking `hyprlock`, preserving the
-current lock screen rendering without duplicating idle behavior here.
-
-## Installation
+On Arch Linux or a compatible distribution:
 
 ```sh
+sudo pacman -S --needed base-devel git shellcheck
+make validate
+make build
 make install
 ```
 
-Use `DESTDIR` for packaging:
+`make build` creates a deterministic local source archive in
+`build/artifacts/` and a package in `build/dist/`. `make install` requires
+`sudo` and installs the single package found there.
 
-```sh
-make DESTDIR="$pkgdir" PREFIX=/usr install
-```
-
-## Validation
+For package metadata only:
 
 ```sh
 make validate
+makepkg -p packaging/arch/ci/PKGBUILD --printsrcinfo
 ```
 
-Validation checks shell syntax, runs ShellCheck when available, and verifies
-that the default Hyprlock config plus all extracted theme templates contain the
-expected lock-screen sections.
+See [packaging/arch/README.md](packaging/arch/README.md) for the local and CI
+packaging layout.
+
+## License
+
+SPDX: `GPL-3.0-only`. See [LICENSE](LICENSE).

@@ -1,4 +1,4 @@
-name: CI
+name: Package Compilation
 
 on:
   push:
@@ -23,27 +23,32 @@ jobs:
 
       - name: Install validation tools
         run: |
-          pacman -Syu --noconfirm --needed             base-devel             git             shellcheck             sudo
+          pacman -Syu --noconfirm --needed base-devel git namcap pacman-contrib shellcheck sudo
 
       - name: Validate repository
         shell: bash
         run: |
           set -euo pipefail
-          if make -n validate >/dev/null 2>&1; then
-            make validate
-          else
-            echo "No make validate target; skipping repository validation."
-          fi
+          make validate
 
-      - name: Validate CI PKGBUILD
+      - name: Build local package
         shell: bash
         run: |
           set -euo pipefail
-          cd "packaging/arch"
-          makepkg -p PKGBUILD --printsrcinfo >/dev/null
+          useradd --create-home --shell /bin/bash builder
+          printf 'builder ALL=(ALL) NOPASSWD: ALL\n' >/etc/sudoers.d/builder
+          chown -R builder:builder "$GITHUB_WORKSPACE"
+          sudo -u builder env HOME=/home/builder make build
 
-      - name: Validate local PKGBUILD
-        shell: bash
-        run: |
-          set -euo pipefail
-          test -f "packaging/arch/PKGBUILD.local"
+  spellcheck:
+    name: Spellcheck
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v4
+
+      - name: Run cspell
+        uses: streetsidesoftware/cspell-action@v6
+        with:
+          config: cspell.json

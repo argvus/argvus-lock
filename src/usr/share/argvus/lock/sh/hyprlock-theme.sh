@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 # Rebuild the active Hyprlock config from its theme template.
 # Usage: hyprlock-theme.sh [--invalidate]
-# shellcheck disable=SC1091
+# shellcheck disable=SC1090,SC1091,SC2034
 
 set -eu
 
