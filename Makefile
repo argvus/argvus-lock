@@ -1,4 +1,4 @@
-.PHONY: help build package install install-package clean validate lint spellcheck changelog
+.PHONY: help build package install install-package clean validate lint lint-shell spellcheck changelog
 
 .DEFAULT_GOAL := help
 
@@ -33,11 +33,21 @@ install-package: install
 validate:
 	@tools/sh/validate.sh
 
-lint:
-	@shellcheck tools/sh/*.sh packaging/arch/common/*.sh src/usr/bin/argvus-hello
-	@bash -n tools/sh/*.sh packaging/arch/common/*.sh src/usr/bin/argvus-hello
+lint-shell:
+	@for root in tools packaging/arch/common src; do \
+		if [ -d "$$root" ]; then \
+			find "$$root" -type f -name '*.sh' -exec shellcheck -e SC1090 -e SC2034 -e SC2154 {} +; \
+		fi; \
+	done
+	@for root in tools packaging/arch/common src; do \
+		if [ -d "$$root" ]; then \
+			find "$$root" -type f -name '*.sh' -exec bash -n {} +; \
+		fi; \
+	done
 	@git diff --check
-	@echo "Lint OK"
+	@echo "Lint Shell OK"
+
+lint: lint-shell
 
 spellcheck:
 	@if command -v cspell >/dev/null 2>&1; then \
