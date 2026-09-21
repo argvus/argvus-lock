@@ -58,12 +58,13 @@ font_state_value() {
 }
 
 THEME="$(read_state "$ACTIVE_FILE" argvus-dark-aether)"
+EFFECTS_STATE="$(read_state "$STATE_DIR/state/effects" enabled)"
 case "$THEME" in
-  argvus-dark-aether|argvus-dark-aether-float) DEFAULT_ACCENT="3590bd" ;;
-  argvus-dark-silver|argvus-dark-silver-float) DEFAULT_ACCENT="595959" ;;
-  argvus-light-veil|argvus-light-veil-float) DEFAULT_ACCENT="181818" ;;
-  argvus-dark-slate|argvus-dark-slate-float) DEFAULT_ACCENT="7391a5" ;;
-  argvus-dark-universe|argvus-dark-universe-float) DEFAULT_ACCENT="eeeeee" ;;
+  argvus-dark-aether|argvus-dark-aether-float) DEFAULT_ACCENT="3590bd"; BACKGROUND="111316" ;;
+  argvus-dark-silver|argvus-dark-silver-float) DEFAULT_ACCENT="595959"; BACKGROUND="111316" ;;
+  argvus-light-veil|argvus-light-veil-float) DEFAULT_ACCENT="181818"; BACKGROUND="f7f7f7" ;;
+  argvus-dark-slate|argvus-dark-slate-float) DEFAULT_ACCENT="7391a5"; BACKGROUND="2f3541" ;;
+  argvus-dark-universe|argvus-dark-universe-float) DEFAULT_ACCENT="eeeeee"; BACKGROUND="000000" ;;
   *)
     printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
     exit 1
@@ -94,6 +95,14 @@ mkdir -p "${LOCK_WALLPAPER%/*}"
 TEMP_FILE="${TARGET_FILE}.theme.$$"
 cp "$THEME_FILE" "$TEMP_FILE"
 sed -i "s|^[[:space:]]*path = .*hyprlock-wallpaper-blur.png|  path = ${LOCK_WALLPAPER}|" "$TEMP_FILE"
+if [ "$EFFECTS_STATE" = "disabled" ]; then
+  sed -i '/^[[:space:]]*path[[:space:]]*=/d; /^[[:space:]]*blur_size[[:space:]]*=/d; /^[[:space:]]*blur_passes[[:space:]]*=/d; /^[[:space:]]*brightness[[:space:]]*=/d' "$TEMP_FILE"
+  _solid_file="${TEMP_FILE}.solid"
+  awk -v background="$BACKGROUND" '
+    /^[[:space:]]*background[[:space:]]*\{/ { print; print "  color = rgb(" background ")"; next }
+    { print }
+  ' "$TEMP_FILE" > "$_solid_file" && mv "$_solid_file" "$TEMP_FILE"
+fi
 sed -i "s|^[[:space:]]*outer_color = .*|  outer_color = rgb(${ACCENT})|" "$TEMP_FILE"
 PASSWORD_PLACEHOLDER="$(argvus_tr lock password_placeholder)"
 sed -i "s|__ARGVUS_LOCK_PASSWORD__|${PASSWORD_PLACEHOLDER}|g" "$TEMP_FILE"
