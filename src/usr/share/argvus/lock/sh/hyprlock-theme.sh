@@ -58,7 +58,8 @@ font_state_value() {
 }
 
 THEME="$(read_state "$ACTIVE_FILE" argvus-dark-aether)"
-EFFECTS_STATE="$(read_state "$STATE_DIR/state/effects" enabled)"
+TRANSPARENCY_STATE="$(read_state "$STATE_DIR/state/transparency" "")"
+[ -n "$TRANSPARENCY_STATE" ] || TRANSPARENCY_STATE="$(read_state "$STATE_DIR/state/effects" enabled)"
 case "$THEME" in
   argvus-dark-aether|argvus-dark-aether-float) DEFAULT_ACCENT="3590bd"; BACKGROUND="111316" ;;
   argvus-dark-silver|argvus-dark-silver-float) DEFAULT_ACCENT="595959"; BACKGROUND="111316" ;;
@@ -95,7 +96,7 @@ mkdir -p "${LOCK_WALLPAPER%/*}"
 TEMP_FILE="${TARGET_FILE}.theme.$$"
 cp "$THEME_FILE" "$TEMP_FILE"
 sed -i "s|^[[:space:]]*path = .*hyprlock-wallpaper-blur.png|  path = ${LOCK_WALLPAPER}|" "$TEMP_FILE"
-if [ "$EFFECTS_STATE" = "disabled" ]; then
+if [ "$TRANSPARENCY_STATE" = "disabled" ]; then
   sed -i '/^[[:space:]]*path[[:space:]]*=/d; /^[[:space:]]*blur_size[[:space:]]*=/d; /^[[:space:]]*blur_passes[[:space:]]*=/d; /^[[:space:]]*brightness[[:space:]]*=/d' "$TEMP_FILE"
   _solid_file="${TEMP_FILE}.solid"
   awk -v background="$BACKGROUND" '
