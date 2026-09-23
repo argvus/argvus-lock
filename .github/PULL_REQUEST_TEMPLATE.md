@@ -18,7 +18,7 @@
 - [ ] `make build` produces the expected `.pkg.tar.zst` in `build/dist/`
 - [ ] `sha256sums` does **not** use `SKIP` (only `sha256sums=()` committed)
 - [ ] No `build/` artifacts or generated temporary PKGBUILDs are committed
-- [ ] No secrets (`GPG_PRIVATE_KEY`, `GPG_PASSPHRASE`, `PACKAGES_REPO_TOKEN`) are added or logged
+- [ ] No secrets (`GPG_PRIVATE_KEY`, `GPG_PASSPHRASE`, `GPG_KEY_ID`, `PACKAGES_REPO_TOKEN`) are added or logged
 - [ ] The two PKGBUILDs stay in sync for metadata and payload behavior (their source definitions intentionally differ)
 - [ ] Conventional commit (`feat:`/`fix:`/`docs:`/`chore:`/`refactor:`/`test:`/`ci:`)
 
