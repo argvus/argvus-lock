@@ -13,13 +13,15 @@ generated `sha256sums`, `src/`, `pkg/`, archives, or packages.
 
 `common/functions.sh` normalizes the extracted source directory. GitHub creates
 `<repository>-v<version>`, while the local archive uses `<pkgname>-<pkgver>`;
-both are presented to the PKGBUILD as `${pkgname}-${pkgver}`.
+both are presented to the PKGBUILD as `${pkgname}-${pkgver}`. The payload check
+derives the theme count from the source tree and requires every theme directory
+to contain a `hyprlock.conf` file.
 
 ## Package-specific payload
 
 The package installs the complete `src/` payload below `/`, plus `LICENSE` in
 `/usr/share/licenses/argvus-lock/`. `common/functions.sh` validates the default
-Hyprlock configuration, the executable helper, and all ten theme templates.
+Hyprlock configuration, the executable helper, and every theme template.
 
 The CI source URL expects a tag named `v${pkgver}`. Run `make validate && make
 build` before committing.

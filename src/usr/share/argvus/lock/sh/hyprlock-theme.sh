@@ -61,11 +61,18 @@ THEME="$(read_state "$ACTIVE_FILE" argvus-dark-aether)"
 TRANSPARENCY_STATE="$(read_state "$STATE_DIR/state/transparency" "")"
 [ -n "$TRANSPARENCY_STATE" ] || TRANSPARENCY_STATE="$(read_state "$STATE_DIR/state/effects" enabled)"
 case "$THEME" in
+  argvus-dracula|argvus-dracula-float) DEFAULT_ACCENT="BD93F9"; BACKGROUND="282A36" ;;
+  argvus-onedark|argvus-onedark-float) DEFAULT_ACCENT="61AFEF"; BACKGROUND="282C34" ;;
   argvus-dark-aether|argvus-dark-aether-float) DEFAULT_ACCENT="3590bd"; BACKGROUND="111316" ;;
   argvus-dark-silver|argvus-dark-silver-float) DEFAULT_ACCENT="595959"; BACKGROUND="111316" ;;
   argvus-light-veil|argvus-light-veil-float) DEFAULT_ACCENT="181818"; BACKGROUND="f7f7f7" ;;
+  argvus-frost|argvus-frost-float) DEFAULT_ACCENT="0969DA"; BACKGROUND="F6F8FA" ;;
+  argvus-catppuccin-latte|argvus-catppuccin-latte-float) DEFAULT_ACCENT="1E66F5"; BACKGROUND="EFF1F5" ;;
   argvus-dark-slate|argvus-dark-slate-float) DEFAULT_ACCENT="7391a5"; BACKGROUND="2f3541" ;;
   argvus-dark-universe|argvus-dark-universe-float) DEFAULT_ACCENT="eeeeee"; BACKGROUND="000000" ;;
+  argvus-gruvbox-dark-medium|argvus-gruvbox-dark-medium-float) DEFAULT_ACCENT="D79921"; BACKGROUND="282828" ;;
+  argvus-rosepine|argvus-rosepine-float) DEFAULT_ACCENT="C4A7E7"; BACKGROUND="191724" ;;
+  argvus-tokyo-night|argvus-tokyo-night-float) DEFAULT_ACCENT="7AA2F7"; BACKGROUND="1A1B26" ;;
   *)
     printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
     exit 1

@@ -30,16 +30,22 @@ arch_normalize_source_tree() {
 
 arch_check_lock_payload() {
 	local source_root="${srcdir}/${pkgname}-${pkgver}"
+	local themes_root="${source_root}/src/usr/share/argvus/lock/config/themes"
+	local theme_directories
+	local theme_configs
 
 	test -f "${source_root}/src/usr/share/argvus/lock/config/hyprlock.conf"
 	test -x "${source_root}/src/usr/share/argvus/lock/sh/hyprlock-theme.sh"
-	test "$(find "${source_root}/src/usr/share/argvus/lock/config/themes" -mindepth 2 -maxdepth 2 -type f -name hyprlock.conf | wc -l)" -eq 10
+	theme_directories="$(find "$themes_root" -mindepth 1 -maxdepth 1 -type d | wc -l)"
+	theme_configs="$(find "$themes_root" -mindepth 2 -maxdepth 2 -type f -name hyprlock.conf | wc -l)"
+	test "$theme_directories" -gt 0
+	test "$theme_configs" -eq "$theme_directories"
 }
 
 arch_package_lock_payload() {
 	local source_root="${srcdir}/${pkgname}-${pkgver}"
 
-	cp -a "${source_root}/src/." "${pkgdir}/"
+	cp -a --no-preserve=ownership "${source_root}/src/." "${pkgdir}/"
 	install -Dm644 "${source_root}/LICENSE" \
 		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
