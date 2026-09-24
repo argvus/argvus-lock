@@ -70,6 +70,7 @@ case "$THEME" in
   argvus-light-solarized|argvus-light-solarized-float) DEFAULT_ACCENT="268BD2"; BACKGROUND="FDF6E3" ;;
   argvus-light-frost|argvus-light-frost-float) DEFAULT_ACCENT="0969DA"; BACKGROUND="F6F8FA" ;;
   argvus-light-catppuccin-latte|argvus-light-catppuccin-latte-float) DEFAULT_ACCENT="1E66F5"; BACKGROUND="EFF1F5" ;;
+  argvus-light-gruvbox|argvus-light-gruvbox-float) DEFAULT_ACCENT="458588"; BACKGROUND="FBF1C7" ;;
   argvus-dark-slate|argvus-dark-slate-float) DEFAULT_ACCENT="7391a5"; BACKGROUND="2f3541" ;;
   argvus-dark-universe|argvus-dark-universe-float) DEFAULT_ACCENT="eeeeee"; BACKGROUND="000000" ;;
   argvus-dark-gruvbox-high|argvus-dark-gruvbox-high-float) DEFAULT_ACCENT="D79921"; BACKGROUND="282828" ;;
