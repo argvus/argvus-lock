@@ -80,6 +80,7 @@ case "$THEME" in
   argvus-dark-solitude|argvus-dark-solitude-float) DEFAULT_ACCENT="798186"; BACKGROUND="101315" ;;
   argvus-dark-sunset|argvus-dark-sunset-float) DEFAULT_ACCENT="E2BE8A"; BACKGROUND="0F0F0F" ;;
   argvus-dark-hackerman|argvus-dark-hackerman-float) DEFAULT_ACCENT="82FB9C"; BACKGROUND="0B0C16" ;;
+  argvus-dark-monokai|argvus-dark-monokai-float) DEFAULT_ACCENT="78DCE8"; BACKGROUND="2D2A2E" ;;
   *)
     printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
     exit 1
