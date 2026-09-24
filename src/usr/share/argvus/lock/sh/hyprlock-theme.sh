@@ -77,6 +77,8 @@ case "$THEME" in
   argvus-dark-rosepine|argvus-dark-rosepine-float) DEFAULT_ACCENT="C4A7E7"; BACKGROUND="191724" ;;
   argvus-dark-tokio-night|argvus-dark-tokio-night-float) DEFAULT_ACCENT="7AA2F7"; BACKGROUND="1A1B26" ;;
   argvus-dark-solitude|argvus-dark-solitude-float) DEFAULT_ACCENT="798186"; BACKGROUND="101315" ;;
+  argvus-dark-sunset|argvus-dark-sunset-float) DEFAULT_ACCENT="E2BE8A"; BACKGROUND="0F0F0F" ;;
+  argvus-dark-hackerman|argvus-dark-hackerman-float) DEFAULT_ACCENT="82FB9C"; BACKGROUND="0B0C16" ;;
   *)
     printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
     exit 1
