@@ -36,6 +36,14 @@ read_state() {
   fi
 }
 
+canonical_theme_id() {
+  case "$1" in
+    argvus-catppuccin-latte|argvus-light-catppuccin-latte) printf '%s\n' "catppuccin-latte" ;;
+    argvus-catppuccin-latte-float|argvus-light-catppuccin-latte-float) printf '%s\n' "catppuccin-latte-float" ;;
+    *) printf '%s\n' "$1" ;;
+  esac
+}
+
 font_state_value() {
   _key="$1"
   _fallback="$2"
@@ -57,30 +65,30 @@ font_state_value() {
   printf '%s\n' "$_fallback"
 }
 
-THEME="$(read_state "$ACTIVE_FILE" argvus-dark-aether)"
+THEME="$(canonical_theme_id "$(read_state "$ACTIVE_FILE" argvus-dark)")"
 TRANSPARENCY_STATE="$(read_state "$STATE_DIR/state/transparency" "")"
 [ -n "$TRANSPARENCY_STATE" ] || TRANSPARENCY_STATE="$(read_state "$STATE_DIR/state/effects" enabled)"
 case "$THEME" in
-  argvus-dark-dracula|argvus-dark-dracula-float) DEFAULT_ACCENT="BD93F9"; BACKGROUND="282A36" ;;
-  argvus-onedark|argvus-onedark-float) DEFAULT_ACCENT="61AFEF"; BACKGROUND="282C34" ;;
-  argvus-dark-aether|argvus-dark-aether-float) DEFAULT_ACCENT="3590bd"; BACKGROUND="111316" ;;
-  argvus-dark-silver|argvus-dark-silver-float) DEFAULT_ACCENT="595959"; BACKGROUND="111316" ;;
-  argvus-light-veil|argvus-light-veil-float) DEFAULT_ACCENT="181818"; BACKGROUND="f7f7f7" ;;
-  argvus-github-light|argvus-github-light-float) DEFAULT_ACCENT="0969DA"; BACKGROUND="FFFFFF" ;;
-  argvus-light-solarized|argvus-light-solarized-float) DEFAULT_ACCENT="268BD2"; BACKGROUND="FDF6E3" ;;
-  argvus-light-frost|argvus-light-frost-float) DEFAULT_ACCENT="0969DA"; BACKGROUND="F6F8FA" ;;
-  argvus-light-catppuccin-latte|argvus-light-catppuccin-latte-float) DEFAULT_ACCENT="1E66F5"; BACKGROUND="EFF1F5" ;;
-  argvus-light-gruvbox|argvus-light-gruvbox-float) DEFAULT_ACCENT="458588"; BACKGROUND="FBF1C7" ;;
-  argvus-dark-slate|argvus-dark-slate-float) DEFAULT_ACCENT="7391a5"; BACKGROUND="2f3541" ;;
-  argvus-dark-universe|argvus-dark-universe-float) DEFAULT_ACCENT="eeeeee"; BACKGROUND="000000" ;;
-  argvus-dark-gruvbox-high|argvus-dark-gruvbox-high-float) DEFAULT_ACCENT="D79921"; BACKGROUND="282828" ;;
-  argvus-dark-gruvbox|argvus-dark-gruvbox-float) DEFAULT_ACCENT="D4BE98"; BACKGROUND="282828" ;;
-  argvus-dark-rosepine|argvus-dark-rosepine-float) DEFAULT_ACCENT="C4A7E7"; BACKGROUND="191724" ;;
-  argvus-dark-tokio-night|argvus-dark-tokio-night-float) DEFAULT_ACCENT="7AA2F7"; BACKGROUND="1A1B26" ;;
-  argvus-dark-solitude|argvus-dark-solitude-float) DEFAULT_ACCENT="798186"; BACKGROUND="101315" ;;
-  argvus-dark-sunset|argvus-dark-sunset-float) DEFAULT_ACCENT="E2BE8A"; BACKGROUND="0F0F0F" ;;
-  argvus-dark-hackerman|argvus-dark-hackerman-float) DEFAULT_ACCENT="82FB9C"; BACKGROUND="0B0C16" ;;
-  argvus-dark-monokai|argvus-dark-monokai-float) DEFAULT_ACCENT="78DCE8"; BACKGROUND="2D2A2E" ;;
+  dracula|dracula-float) DEFAULT_ACCENT="BD93F9"; BACKGROUND="282A36" ;;
+  one-dark|one-dark-float) DEFAULT_ACCENT="61AFEF"; BACKGROUND="282C34" ;;
+  argvus-dark|argvus-dark-float) DEFAULT_ACCENT="3590bd"; BACKGROUND="111316" ;;
+  silver-dark|silver-dark-float) DEFAULT_ACCENT="595959"; BACKGROUND="111316" ;;
+  argvus-light|argvus-light-float) DEFAULT_ACCENT="181818"; BACKGROUND="f7f7f7" ;;
+  github-light|github-light-float) DEFAULT_ACCENT="0969DA"; BACKGROUND="FFFFFF" ;;
+  solarized-light|solarized-light-float) DEFAULT_ACCENT="268BD2"; BACKGROUND="FDF6E3" ;;
+  frost|frost-float) DEFAULT_ACCENT="0969DA"; BACKGROUND="F6F8FA" ;;
+  catppuccin-latte|catppuccin-latte-float) DEFAULT_ACCENT="1E66F5"; BACKGROUND="EFF1F5" ;;
+  gruvbox-light|gruvbox-light-float) DEFAULT_ACCENT="458588"; BACKGROUND="FBF1C7" ;;
+  slate-dark|slate-dark-float) DEFAULT_ACCENT="7391a5"; BACKGROUND="2f3541" ;;
+  universe|universe-float) DEFAULT_ACCENT="eeeeee"; BACKGROUND="000000" ;;
+  gruvbox-high-dark|gruvbox-high-dark-float) DEFAULT_ACCENT="D79921"; BACKGROUND="282828" ;;
+  gruvbox-dark|gruvbox-dark-float) DEFAULT_ACCENT="D4BE98"; BACKGROUND="282828" ;;
+  rose-pine|rose-pine-float) DEFAULT_ACCENT="C4A7E7"; BACKGROUND="191724" ;;
+  tokyo-night|tokyo-night-float) DEFAULT_ACCENT="7AA2F7"; BACKGROUND="1A1B26" ;;
+  solitude|solitude-float) DEFAULT_ACCENT="798186"; BACKGROUND="101315" ;;
+  sunset|sunset-float) DEFAULT_ACCENT="E2BE8A"; BACKGROUND="0F0F0F" ;;
+  hackerman|hackerman-float) DEFAULT_ACCENT="82FB9C"; BACKGROUND="0B0C16" ;;
+  monokai-dark|monokai-dark-float) DEFAULT_ACCENT="78DCE8"; BACKGROUND="2D2A2E" ;;
   *)
     printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
     exit 1
