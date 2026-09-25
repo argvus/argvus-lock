@@ -46,6 +46,7 @@ arch_package_lock_payload() {
 	local source_root="${srcdir}/${pkgname}-${pkgver}"
 
 	cp -a --no-preserve=ownership "${source_root}/src/." "${pkgdir}/"
+	find "${pkgdir}" -type f -name '*.sh' -exec chmod 755 {} +
 	install -Dm644 "${source_root}/LICENSE" \
 		"${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 }
