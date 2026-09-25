@@ -75,6 +75,8 @@ case "$THEME" in
   silver-dark|silver-dark-float) DEFAULT_ACCENT="595959"; BACKGROUND="111316" ;;
   argvus-light|argvus-light-float) DEFAULT_ACCENT="181818"; BACKGROUND="f7f7f7" ;;
   github-light|github-light-float) DEFAULT_ACCENT="0969DA"; BACKGROUND="FFFFFF" ;;
+  one-light|one-light-float) DEFAULT_ACCENT="4078F2"; BACKGROUND="FAFAFA" ;;
+  everforest-light|everforest-light-float) DEFAULT_ACCENT="3A94C5"; BACKGROUND="FDF6E3" ;;
   solarized-light|solarized-light-float) DEFAULT_ACCENT="268BD2"; BACKGROUND="FDF6E3" ;;
   frost|frost-float) DEFAULT_ACCENT="0969DA"; BACKGROUND="F6F8FA" ;;
   catppuccin-latte|catppuccin-latte-float) DEFAULT_ACCENT="1E66F5"; BACKGROUND="EFF1F5" ;;
