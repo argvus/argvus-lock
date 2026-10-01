@@ -11,7 +11,7 @@ ARGVUS_MUTABLE_CONFIG=1
 # shellcheck source=/usr/share/argvus/lib/i18n.sh
 . /usr/share/argvus/lib/i18n.sh
 
-STATE_DIR="${ARGVUS_CONFIG_HOME}/argvus"
+STATE_DIR="${ARGVUS_CONFIG_HOME}/argvus/data"
 ACTIVE_FILE="${STATE_DIR}/.active-theme"
 ACCENT_FILE="${STATE_DIR}/.accent-color"
 TARGET_FILE="$(paths_config lock/config/hyprlock.conf)"
@@ -29,7 +29,11 @@ esac
 read_state() {
   _file="$1"
   _fallback="$2"
-  if [ -s "$_file" ]; then
+  # The effects state migrated from a legacy file to the generated
+  # state/effects/ directory. Only regular files are readable state values;
+  # directories must fall through to the supplied default instead of making
+  # this set -e projection fail.
+  if [ -f "$_file" ] && [ -s "$_file" ]; then
     sed -n '1p' "$_file"
   else
     printf '%s\n' "$_fallback"
@@ -47,7 +51,7 @@ canonical_theme_id() {
 font_state_value() {
   _key="$1"
   _fallback="$2"
-  _fonts_file="${ARGVUS_CONFIG_HOME}/argvus/fonts.conf"
+  _fonts_file="${ARGVUS_CONFIG_HOME}/argvus/data/generated/fonts.conf"
 
   if [ -f "$_fonts_file" ]; then
     awk -F= -v key="$_key" '
@@ -97,7 +101,10 @@ case "$THEME" in
     ;;
 esac
 
-THEME_FILE="$(paths_config "lock/config/themes/${THEME}/hyprlock.conf")"
+ # Theme templates are read-only inputs. Resolve the user override or the
+ # packaged system template without materializing a directory/file copy just
+ # to regenerate the derived hyprlock.conf.
+THEME_FILE="$(paths_read_config "lock/config/themes/${THEME}/hyprlock.conf")"
 if [ ! -f "$THEME_FILE" ]; then
   THEME_FILE="$SYSTEM_CONFIG/lock/config/themes/${THEME}/hyprlock.conf"
 fi
