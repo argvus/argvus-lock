@@ -72,6 +72,9 @@ font_state_value() {
 THEME="$(canonical_theme_id "$(read_state "$ACTIVE_FILE" argvus-dark)")"
 TRANSPARENCY_STATE="$(read_state "$STATE_DIR/state/transparency" "")"
 [ -n "$TRANSPARENCY_STATE" ] || TRANSPARENCY_STATE="$(read_state "$STATE_DIR/state/effects" enabled)"
+DEFAULT_ACCENT=""
+BACKGROUND=""
+
 case "$THEME" in
   dracula|dracula-float) DEFAULT_ACCENT="BD93F9"; BACKGROUND="282A36" ;;
   one-dark|one-dark-float) DEFAULT_ACCENT="61AFEF"; BACKGROUND="282C34" ;;
@@ -96,8 +99,20 @@ case "$THEME" in
   hackerman|hackerman-float) DEFAULT_ACCENT="82FB9C"; BACKGROUND="0B0C16" ;;
   monokai-dark|monokai-dark-float) DEFAULT_ACCENT="78DCE8"; BACKGROUND="2D2A2E" ;;
   *)
-    printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
-    exit 1
+    # Drop-in theme package: read its manifest through the CLI.
+    _theme_base="${THEME%-float}"
+    if command -v argvus-appearance >/dev/null 2>&1; then
+      DEFAULT_ACCENT="$(argvus-appearance themes get "$_theme_base" accent 2>/dev/null || true)"
+      DEFAULT_ACCENT="${DEFAULT_ACCENT#\#}"
+      case "$(argvus-appearance themes get "$_theme_base" category 2>/dev/null || true)" in
+        light) BACKGROUND="f7f7f7" ;;
+        dark) BACKGROUND="111316" ;;
+      esac
+    fi
+    if [ -z "$DEFAULT_ACCENT" ] || [ -z "$BACKGROUND" ]; then
+      printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
+      exit 1
+    fi
     ;;
 esac
 
