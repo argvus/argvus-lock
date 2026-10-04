@@ -109,6 +109,21 @@ case "$THEME" in
         dark) BACKGROUND="111316" ;;
       esac
     fi
+    # Without the CLI, read the installed drop-in manifest directly. Top-level
+    # keys are read before the first [table]; the background lives in
+    # [appearance] and is read from that table only.
+    _manifest="${SYSTEM_CONFIG:-/usr/share/argvus}/appearance/themes.d/${_theme_base}/theme.toml"
+    if [ -z "$DEFAULT_ACCENT" ] && [ -r "$_manifest" ]; then
+      DEFAULT_ACCENT="$(sed -n -e '/^\[/q' -e 's/^accent = "#\([0-9A-Fa-f]\{6\}\)".*/\1/p' "$_manifest" | head -n 1)"
+    fi
+    if [ -z "$BACKGROUND" ] && [ -r "$_manifest" ]; then
+      case "$(sed -n -e '/^\[/q' -e 's/^category = "\([a-z]*\)".*/\1/p' "$_manifest" | head -n 1)" in
+        light) BACKGROUND="f7f7f7" ;;
+        dark) BACKGROUND="111316" ;;
+      esac
+      _manifest_background="$(sed -n '/^\[appearance\]/,/^\[/p' "$_manifest" | sed -n 's/^background = "#\([0-9A-Fa-f]\{6\}\)".*/\1/p' | head -n 1)"
+      [ -n "$_manifest_background" ] && BACKGROUND="$_manifest_background"
+    fi
     if [ -z "$DEFAULT_ACCENT" ] || [ -z "$BACKGROUND" ]; then
       printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
       exit 1
