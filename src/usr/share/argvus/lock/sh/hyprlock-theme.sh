@@ -96,7 +96,7 @@ case "$THEME" in
   tokyo-night|tokyo-night-float) DEFAULT_ACCENT="7AA2F7"; BACKGROUND="1A1B26" ;;
   solitude|solitude-float) DEFAULT_ACCENT="798186"; BACKGROUND="101315" ;;
   sunset|sunset-float) DEFAULT_ACCENT="E2BE8A"; BACKGROUND="0F0F0F" ;;
-  hackerman|hackerman-float) DEFAULT_ACCENT="82FB9C"; BACKGROUND="0B0C16" ;;
+  matrix|matrix-float) DEFAULT_ACCENT="82FB9C"; BACKGROUND="0B0C16" ;;
   monokai-dark|monokai-dark-float) DEFAULT_ACCENT="78DCE8"; BACKGROUND="2D2A2E" ;;
   *)
     # Drop-in theme package: read its manifest through the CLI.
