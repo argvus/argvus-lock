@@ -70,8 +70,13 @@ font_state_value() {
 }
 
 THEME="$(canonical_theme_id "$(read_state "$ACTIVE_FILE" argvus-dark)")"
-TRANSPARENCY_STATE="$(read_state "$STATE_DIR/state/transparency" "")"
-[ -n "$TRANSPARENCY_STATE" ] || TRANSPARENCY_STATE="$(read_state "$STATE_DIR/state/effects" enabled)"
+# The lock screen follows the canonical taskbar transparency switch in
+# argvus-config. Without a readable value it keeps the enabled default.
+case "$(argvus config get /effects/transparency_taskbar_enabled --effective --raw 2>/dev/null || true)" in
+  true|enabled) TRANSPARENCY_STATE=enabled ;;
+  false|disabled) TRANSPARENCY_STATE=disabled ;;
+  *) TRANSPARENCY_STATE=enabled ;;
+esac
 DEFAULT_ACCENT=""
 BACKGROUND=""
 
@@ -137,6 +142,22 @@ esac
 THEME_FILE="$(paths_read_config "lock/config/themes/${THEME}/hyprlock.conf")"
 if [ ! -f "$THEME_FILE" ]; then
   THEME_FILE="$SYSTEM_CONFIG/lock/config/themes/${THEME}/hyprlock.conf"
+fi
+if [ ! -f "$THEME_FILE" ]; then
+  # Most themes ship no lock template of their own. They use the packaged
+  # ARGVUS template of their mode, keeping the Float variant. A light
+  # background has a first hex digit of 8 or higher.
+  case "$(printf '%.1s' "$BACKGROUND")" in
+    [89a-fA-F]) _lock_mode=light ;;
+    *) _lock_mode=dark ;;
+  esac
+  case "$THEME" in
+    *-float) _lock_mode="${_lock_mode}-float" ;;
+  esac
+  THEME_FILE="$(paths_read_config "lock/config/themes/argvus-${_lock_mode}/hyprlock.conf")"
+  if [ ! -f "$THEME_FILE" ]; then
+    THEME_FILE="$SYSTEM_CONFIG/lock/config/themes/argvus-${_lock_mode}/hyprlock.conf"
+  fi
 fi
 if [ ! -f "$THEME_FILE" ]; then
   printf '%s\n' "$(argvus_tr lock theme_not_found theme="$THEME")" >&2
