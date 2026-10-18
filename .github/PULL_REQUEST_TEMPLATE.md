@@ -26,7 +26,7 @@
 
 - [ ] `make build`
 - [ ] `make install`
-- [ ] Installed payload verified: `pacman -Ql <pkgname>` / `argvus-hello`
+- [ ] Installed payload verified: `pacman -Ql <pkgname>`
 
 ## Notes
 
