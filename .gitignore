@@ -14,3 +14,5 @@ packaging/arch/local/src/
 packaging/arch/local/pkg/
 packaging/arch/local/PKGBUILD.local
 packaging/arch/*/.PKGBUILD.local.*
+target/
+__pycache__/
