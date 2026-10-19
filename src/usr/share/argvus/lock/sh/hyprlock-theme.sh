@@ -90,7 +90,6 @@ case "$THEME" in
   one-light|one-light-float) DEFAULT_ACCENT="4078F2"; BACKGROUND="FAFAFA" ;;
   everforest-light|everforest-light-float) DEFAULT_ACCENT="3A94C5"; BACKGROUND="FDF6E3" ;;
   solarized-light|solarized-light-float) DEFAULT_ACCENT="268BD2"; BACKGROUND="FDF6E3" ;;
-  frost|frost-float) DEFAULT_ACCENT="0969DA"; BACKGROUND="F6F8FA" ;;
   catppuccin-latte|catppuccin-latte-float) DEFAULT_ACCENT="1E66F5"; BACKGROUND="EFF1F5" ;;
   gruvbox-light|gruvbox-light-float) DEFAULT_ACCENT="458588"; BACKGROUND="FBF1C7" ;;
   slate-dark|slate-dark-float) DEFAULT_ACCENT="7391a5"; BACKGROUND="2f3541" ;;
