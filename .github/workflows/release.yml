@@ -27,14 +27,14 @@ jobs:
       contents: write
 
     steps:
+      - name: Install packaging tools
+        run: |
+          pacman -Syu --noconfirm --needed git gnupg namcap pacman-contrib sudo
+
       - name: Checkout source
         uses: actions/checkout@v4
         with:
           ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
-
-      - name: Install packaging tools
-        run: |
-          pacman -Syu --noconfirm --needed git gnupg namcap pacman-contrib sudo
 
       - name: Prepare build user
         run: |
@@ -207,13 +207,21 @@ jobs:
           fi
 
           git commit -m "Publish package ${{ steps.version.outputs.version }}"
-          git push
+          for attempt in 1 2 3 4 5; do
+            if git pull --rebase --quiet && git push --quiet; then
+              break
+            fi
+            if [ "$attempt" = 5 ]; then
+              echo "::error::could not publish after 5 attempts"; exit 1
+            fi
+            sleep $((attempt * 5))
+          done
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ github.ref_name }}
-          name: ${{ github.ref_name }}
+          tag_name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+          name: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
           generate_release_notes: true
           files: |
             ${{ env.pkg_file }}
