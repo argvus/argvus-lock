@@ -53,13 +53,13 @@ tar -czf "$archive" \
   --exclude='./tools' \
   --exclude='./packaging/arch/local/src' \
   --exclude='./packaging/arch/local/pkg' \
-  --exclude='./packaging/arch/ci/src' \
-  --exclude='./packaging/arch/ci/pkg' \
+  --exclude='./packaging/arch/remote/src' \
+  --exclude='./packaging/arch/remote/pkg' \
   --exclude='./packaging/arch/*/PKGBUILD.local' \
   --exclude='./packaging/arch/local/*.pkg.tar*' \
-  --exclude='./packaging/arch/ci/*.pkg.tar*' \
+  --exclude='./packaging/arch/remote/*.pkg.tar*' \
   --exclude='./packaging/arch/local/*.tar.gz' \
-  --exclude='./packaging/arch/ci/*.tar.gz' \
+  --exclude='./packaging/arch/remote/*.tar.gz' \
   --exclude='./*.pkg.tar*' \
   --transform "s#^\./#${pkgname}-${pkgver}/#" \
   -C "$ROOT_DIR" .

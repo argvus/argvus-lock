@@ -38,8 +38,8 @@ Paste the command output or error message.
 **Repository state**
 
 - Commit / tag: e.g. `main@abc1234`, `v0.1.0`
-- PKGBUILD involved: `packaging/arch/local/PKGBUILD` / `packaging/arch/ci/PKGBUILD`
-- `url` in the CI PKGBUILD: [filled / empty]
+- PKGBUILD involved: `packaging/arch/local/PKGBUILD` / `packaging/arch/remote/PKGBUILD`
+- `url` in the remote PKGBUILD: [filled / empty]
 
 **Environment (please complete the following information):**
 

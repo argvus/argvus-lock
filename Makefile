@@ -1,4 +1,4 @@
-.PHONY: help build package install install-package clean validate lint lint-shell spellcheck changelog
+.PHONY: help build package install install-package clean validate lint lint-shell spellcheck
 
 .DEFAULT_GOAL := help
 
@@ -11,7 +11,6 @@ help:
 	@echo "  make validate        - run required repository and PKGBUILD checks"
 	@echo "  make lint            - run local static checks"
 	@echo "  make spellcheck      - run cspell (if installed)"
-	@echo "  make changelog       - regenerate CHANGELOG.md with git-cliff"
 
 build:
 	@tools/sh/pkgbuild_local.sh
@@ -56,9 +55,6 @@ spellcheck:
 	else \
 		echo "cspell is not installed; skipping (CI runs it)." >&2; \
 	fi
-
-changelog:
-	@git-cliff -o CHANGELOG.md
 
 clean:
 	rm -rf -- build/

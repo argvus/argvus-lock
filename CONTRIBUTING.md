@@ -113,7 +113,7 @@ git push origin v0.1.0
 ```
 
 `release.yml` builds, signs and publishes the package to `argvus/packages`.
-Make sure `url` is set correctly in `packaging/arch/ci/PKGBUILD` before
+Make sure `url` is set correctly in `packaging/arch/remote/PKGBUILD` before
 tagging.
 
 ## Style and tooling

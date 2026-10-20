@@ -16,7 +16,6 @@
     "LICENSE",
     "AUTHORS.md",
     "TODO.txt",
-    "cliff.toml",
     "**/PKGBUILD*"
   ]
 }

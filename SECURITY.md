@@ -45,7 +45,7 @@ installing from the repository.
 This project produces an Arch Linux package (`.pkg.tar.zst`) built from this
 repository. Security-sensitive behavior includes: the `sha256sums` validation
 (no `SKIP`), the GPG signing of packages and repository metadata, and the
-source archive URL used by the CI PKGBUILD (`packaging/arch/ci/PKGBUILD`).
+source archive URL used by the remote PKGBUILD (`packaging/arch/remote/PKGBUILD`).
 
 If you are reporting an issue in software this package ships, report it to the
 upstream project and link it here.

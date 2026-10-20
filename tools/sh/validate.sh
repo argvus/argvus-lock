@@ -31,12 +31,12 @@ metadata() {
 	' bash "$1"
 }
 
-ci_metadata="$(metadata packaging/arch/ci/PKGBUILD)"
+remote_metadata="$(metadata packaging/arch/remote/PKGBUILD)"
 local_metadata="$(metadata packaging/arch/local/PKGBUILD)"
-[[ "$ci_metadata" == "$local_metadata" ]] || die \
-	"CI and local PKGBUILD metadata is out of sync"
+[[ "$remote_metadata" == "$local_metadata" ]] || die \
+	"remote and local PKGBUILD metadata is out of sync"
 
-for pkgbuild_dir in packaging/arch/ci packaging/arch/local; do
+for pkgbuild_dir in packaging/arch/remote packaging/arch/local; do
 	pkgbuild="$pkgbuild_dir/PKGBUILD"
 	[[ -f "$pkgbuild" ]] || die "missing $pkgbuild"
 	(

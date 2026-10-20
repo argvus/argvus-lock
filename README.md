@@ -34,7 +34,7 @@ For package metadata only:
 
 ```sh
 make validate
-makepkg -p packaging/arch/ci/PKGBUILD --printsrcinfo
+makepkg -p packaging/arch/remote/PKGBUILD --printsrcinfo
 ```
 
 See [packaging/arch/README.md](packaging/arch/README.md) for the local and CI
