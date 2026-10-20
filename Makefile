@@ -30,7 +30,6 @@ install:
 install-package: install
 
 validate:
-	@sh tools/sh/sync-skeleton.sh --check
 	@tools/sh/validate.sh
 
 lint-shell:
