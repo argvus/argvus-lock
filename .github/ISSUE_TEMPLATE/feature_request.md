@@ -22,7 +22,7 @@ A clear and concise description of any alternative solutions or workarounds.
 - [ ] Local build tooling (`tools/sh/`, `Makefile`)
 - [ ] CI / release workflow (`.github/workflows/`)
 - [ ] Repository metadata (dependencies, signing, `argvus/packages`)
-- [ ] Documentation (README, DEVELOPMENT, CONTRIBUTING)
+- [ ] Documentation (README, DEVELOPMENT, [CONTRIBUTING](https://github.com/argvus/.github/blob/main/CONTRIBUTING.md))
 
 **Additional context**
 Add any other context or examples here.

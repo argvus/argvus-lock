@@ -40,6 +40,13 @@ makepkg -p packaging/arch/remote/PKGBUILD --printsrcinfo
 See [packaging/arch/README.md](packaging/arch/README.md) for the local and CI
 packaging layout.
 
+## Contributing and policies
+
+- [CONTRIBUTING.md](https://github.com/argvus/.github/blob/main/CONTRIBUTING.md) — contribution workflow
+- [SECURITY.md](https://github.com/argvus/.github/blob/main/SECURITY.md) — private vulnerability reports
+- [Code of Conduct](https://github.com/argvus/.github/blob/main/policies/CODE_OF_CONDUCT.md) — community standards
+- [AI usage policy](https://github.com/argvus/.github/blob/main/policies/IA_USAGE.md) — rules for AI-assisted contributions
+
 ## License
 
 SPDX: `GPL-3.0-only`. See [LICENSE](LICENSE).

@@ -164,4 +164,4 @@ make build
   or an archive URL format that does not match the host (GitHub vs GitLab) —
   see the release section.
 
-See also [CONTRIBUTING.md](CONTRIBUTING.md) for the contribution workflow.
+See also [CONTRIBUTING.md](https://github.com/argvus/.github/blob/main/CONTRIBUTING.md) for the contribution workflow.

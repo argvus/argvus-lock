@@ -18,13 +18,13 @@ These are the people responsible for the direction, maintenance, and releases of
 
 These are the people who have contributed code, documentation, bug reports, or ideas to this package.
 
-*No external contributors yet. Be the first — see [CONTRIBUTING.md](CONTRIBUTING.md)!*
+*No external contributors yet. Be the first — see [CONTRIBUTING.md](https://github.com/argvus/.github/blob/main/CONTRIBUTING.md)!*
 
 ---
 
 ## How to get listed
 
-Contribute to the project by opening a Pull Request. Once your contribution is merged, your name will be added to this file. See [CONTRIBUTING.md](CONTRIBUTING.md) for details.
+Contribute to the project by opening a Pull Request. Once your contribution is merged, your name will be added to this file. See [CONTRIBUTING.md](https://github.com/argvus/.github/blob/main/CONTRIBUTING.md) for details.
 
 ---
 
