@@ -2,6 +2,19 @@
 
 # argvus-lock
 
+<div align="center">
+
+[![CI](https://github.com/argvus/argvus-lock/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/argvus/argvus-lock/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/argvus/argvus-lock)](./LICENSE)
+[![Language: Shell](https://img.shields.io/badge/Shell-POSIX-4EAA25?logo=gnubash&logoColor=white)](https://www.gnu.org/software/bash/)
+[![Platform: Arch Linux | Wayland](https://img.shields.io/badge/platform-Arch%20Linux%20%7C%20Wayland-1793D1?logo=archlinux&logoColor=white)](https://archlinux.org/)
+[![Pull requests](https://img.shields.io/github/issues-pr/argvus/argvus-lock)](https://github.com/argvus/argvus-lock/pulls)
+[![Issues](https://img.shields.io/github/issues/argvus/argvus-lock)](https://github.com/argvus/argvus-lock/issues)
+[![Last commit](https://img.shields.io/github/last-commit/argvus/argvus-lock)](https://github.com/argvus/argvus-lock/commits/main)
+[![Docs](https://img.shields.io/badge/docs-project-blue)](./docs/)
+
+</div>
+
 Hyprlock configuration, lock-screen theme templates, and the theme-application
 helper for the ARGVUS desktop environment.
 
