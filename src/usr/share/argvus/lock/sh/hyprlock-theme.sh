@@ -13,9 +13,7 @@ ARGVUS_MUTABLE_CONFIG=1
 
 STATE_DIR="${ARGVUS_CONFIG_HOME}/argvus/data"
 ACTIVE_FILE="${STATE_DIR}/.active-theme"
-ACCENT_FILE="${STATE_DIR}/.accent-color"
 TARGET_FILE="$(paths_config lock/config/hyprlock.conf)"
-SYSTEM_CONFIG="${ARGVUS_SYSTEM_CONFIG:-/usr/share/argvus}"
 LOCK_WALLPAPER="$(paths_cache hypr)/hyprlock-wallpaper-blur.png"
 
 case "${1:-}" in
@@ -77,101 +75,22 @@ case "$(argvus config get /effects/transparency_taskbar_enabled --effective --ra
   false|disabled) TRANSPARENCY_STATE=disabled ;;
   *) TRANSPARENCY_STATE=enabled ;;
 esac
-DEFAULT_ACCENT=""
-BACKGROUND=""
-
-case "$THEME" in
-  dracula|dracula-float) DEFAULT_ACCENT="BD93F9"; BACKGROUND="282A36" ;;
-  one-dark|one-dark-float) DEFAULT_ACCENT="61AFEF"; BACKGROUND="282C34" ;;
-  argvus-dark|argvus-dark-float) DEFAULT_ACCENT="3590bd"; BACKGROUND="111316" ;;
-  silver-dark|silver-dark-float) DEFAULT_ACCENT="595959"; BACKGROUND="111316" ;;
-  argvus-light|argvus-light-float) DEFAULT_ACCENT="181818"; BACKGROUND="f7f7f7" ;;
-  github-light|github-light-float) DEFAULT_ACCENT="0969DA"; BACKGROUND="FFFFFF" ;;
-  one-light|one-light-float) DEFAULT_ACCENT="4078F2"; BACKGROUND="FAFAFA" ;;
-  everforest-light|everforest-light-float) DEFAULT_ACCENT="3A94C5"; BACKGROUND="FDF6E3" ;;
-  solarized-light|solarized-light-float) DEFAULT_ACCENT="268BD2"; BACKGROUND="FDF6E3" ;;
-  catppuccin-latte|catppuccin-latte-float) DEFAULT_ACCENT="1E66F5"; BACKGROUND="EFF1F5" ;;
-  gruvbox-light|gruvbox-light-float) DEFAULT_ACCENT="458588"; BACKGROUND="FBF1C7" ;;
-  slate-dark|slate-dark-float) DEFAULT_ACCENT="7391a5"; BACKGROUND="2f3541" ;;
-  universe|universe-float) DEFAULT_ACCENT="eeeeee"; BACKGROUND="000000" ;;
-  gruvbox-high-dark|gruvbox-high-dark-float) DEFAULT_ACCENT="D79921"; BACKGROUND="282828" ;;
-  gruvbox-dark|gruvbox-dark-float) DEFAULT_ACCENT="D4BE98"; BACKGROUND="282828" ;;
-  rose-pine|rose-pine-float) DEFAULT_ACCENT="C4A7E7"; BACKGROUND="191724" ;;
-  tokyo-night|tokyo-night-float) DEFAULT_ACCENT="7AA2F7"; BACKGROUND="1A1B26" ;;
-  solitude|solitude-float) DEFAULT_ACCENT="798186"; BACKGROUND="101315" ;;
-  sunset|sunset-float) DEFAULT_ACCENT="E2BE8A"; BACKGROUND="0F0F0F" ;;
-  matrix|matrix-float) DEFAULT_ACCENT="82FB9C"; BACKGROUND="0B0C16" ;;
-  monokai-dark|monokai-dark-float) DEFAULT_ACCENT="78DCE8"; BACKGROUND="2D2A2E" ;;
-  *)
-    # Drop-in theme package: read its manifest through the CLI.
-    _theme_base="${THEME%-float}"
-    if command -v argvus-appearance >/dev/null 2>&1; then
-      DEFAULT_ACCENT="$(argvus-appearance themes get "$_theme_base" accent 2>/dev/null || true)"
-      DEFAULT_ACCENT="${DEFAULT_ACCENT#\#}"
-      case "$(argvus-appearance themes get "$_theme_base" category 2>/dev/null || true)" in
-        light) BACKGROUND="f7f7f7" ;;
-        dark) BACKGROUND="111316" ;;
-      esac
-    fi
-    # Without the CLI, read the installed drop-in manifest directly. Top-level
-    # keys are read before the first [table]; the background lives in
-    # [appearance] and is read from that table only.
-    _manifest="${SYSTEM_CONFIG:-/usr/share/argvus}/appearance/themes.d/${_theme_base}/theme.toml"
-    if [ -z "$DEFAULT_ACCENT" ] && [ -r "$_manifest" ]; then
-      DEFAULT_ACCENT="$(sed -n -e '/^\[/q' -e 's/^accent = "#\([0-9A-Fa-f]\{6\}\)".*/\1/p' "$_manifest" | head -n 1)"
-    fi
-    if [ -z "$BACKGROUND" ] && [ -r "$_manifest" ]; then
-      case "$(sed -n -e '/^\[/q' -e 's/^category = "\([a-z]*\)".*/\1/p' "$_manifest" | head -n 1)" in
-        light) BACKGROUND="f7f7f7" ;;
-        dark) BACKGROUND="111316" ;;
-      esac
-      _manifest_background="$(sed -n '/^\[appearance\]/,/^\[/p' "$_manifest" | sed -n 's/^background = "#\([0-9A-Fa-f]\{6\}\)".*/\1/p' | head -n 1)"
-      [ -n "$_manifest_background" ] && BACKGROUND="$_manifest_background"
-    fi
-    if [ -z "$DEFAULT_ACCENT" ] || [ -z "$BACKGROUND" ]; then
-      printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
-      exit 1
-    fi
-    ;;
-esac
-
- # Theme templates are read-only inputs. Resolve the user override or the
- # packaged system template without materializing a directory/file copy just
- # to regenerate the derived hyprlock.conf.
-THEME_FILE="$(paths_read_config "lock/config/themes/${THEME}/hyprlock.conf")"
-if [ ! -f "$THEME_FILE" ]; then
-  THEME_FILE="$SYSTEM_CONFIG/lock/config/themes/${THEME}/hyprlock.conf"
-fi
-if [ ! -f "$THEME_FILE" ]; then
-  # Most themes ship no lock template of their own. They use the packaged
-  # ARGVUS template of their mode, keeping the Float variant. A light
-  # background has a first hex digit of 8 or higher.
-  case "$(printf '%.1s' "$BACKGROUND")" in
-    [89a-fA-F]) _lock_mode=light ;;
-    *) _lock_mode=dark ;;
-  esac
-  case "$THEME" in
-    *-float) _lock_mode="${_lock_mode}-float" ;;
-  esac
-  THEME_FILE="$(paths_read_config "lock/config/themes/argvus-${_lock_mode}/hyprlock.conf")"
-  if [ ! -f "$THEME_FILE" ]; then
-    THEME_FILE="$SYSTEM_CONFIG/lock/config/themes/argvus-${_lock_mode}/hyprlock.conf"
-  fi
-fi
-if [ ! -f "$THEME_FILE" ]; then
+# The theme build renders the lock screen of the active theme, layout and
+# accent; its build.toml has the accent and the background colour.
+if ! THEME_FILE="$(paths_theme_build_file "$THEME" lock/hyprlock.conf)"; then
   printf '%s\n' "$(argvus_tr lock theme_not_found theme="$THEME")" >&2
   exit 1
 fi
-
-ACCENT="$(read_state "$ACCENT_FILE" "#$DEFAULT_ACCENT" | tr 'A-F' 'a-f' | sed 's/^#//')"
-case "$ACCENT" in
-  ??????)
-    case "$ACCENT" in
-      *[!0-9a-f]*) ACCENT="$DEFAULT_ACCENT" ;;
-    esac
-    ;;
-  *) ACCENT="$DEFAULT_ACCENT" ;;
-esac
+BUILD_MANIFEST="${THEME_FILE%/lock/hyprlock.conf}/build.toml"
+build_color() {
+  sed -n "s/^$1 = \"#\([0-9A-Fa-f]\{6\}\)\"\$/\1/p" "$BUILD_MANIFEST" | head -n 1
+}
+ACCENT="$(build_color accent)"
+BACKGROUND="$(build_color background)"
+if [ -z "$ACCENT" ] || [ -z "$BACKGROUND" ]; then
+  printf '%s\n' "$(argvus_tr lock invalid_active_theme theme="$THEME")" >&2
+  exit 1
+fi
 
 mkdir -p "${TARGET_FILE%/*}"
 mkdir -p "${LOCK_WALLPAPER%/*}"
@@ -186,7 +105,6 @@ if [ "$TRANSPARENCY_STATE" = "disabled" ]; then
     { print }
   ' "$TEMP_FILE" > "$_solid_file" && mv "$_solid_file" "$TEMP_FILE"
 fi
-sed -i "s|^[[:space:]]*outer_color = .*|  outer_color = rgb(${ACCENT})|" "$TEMP_FILE"
 PASSWORD_PLACEHOLDER="$(argvus_tr lock password_placeholder)"
 sed -i "s|__ARGVUS_LOCK_PASSWORD__|${PASSWORD_PLACEHOLDER}|g" "$TEMP_FILE"
 LOCK_FONT="$(font_state_value system_name "$(font_state_value default_name "IBM Plex Mono")")"

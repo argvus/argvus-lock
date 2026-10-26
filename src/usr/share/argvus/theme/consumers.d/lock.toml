@@ -1,0 +1,13 @@
+# Theme consumer: rendered into every theme build as lock/hyprlock.conf.
+id = "lock"
+template = "lock/theme-template/hyprlock.conf"
+output = "lock/hyprlock.conf"
+
+# Defaults for the tokens the template reads; a theme that defines one wins.
+[palette]
+bg_panel = "@bg | alpha(0.814)"
+fg_dim = "@fg | mix(@bg, 0.25)"
+lock_color = "@bg_panel | alpha(0.68)"
+lock_color_2 = "@fg | alpha(0.82)"
+lock_color_3 = "@fg_dim | alpha(0.78)"
+lock_inner_color = "@bg"

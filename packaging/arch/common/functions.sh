@@ -30,16 +30,11 @@ arch_normalize_source_tree() {
 
 arch_check_lock_payload() {
 	local source_root="${srcdir}/${pkgname}-${pkgver}"
-	local themes_root="${source_root}/src/usr/share/argvus/lock/config/themes"
-	local theme_directories
-	local theme_configs
 
 	test -f "${source_root}/src/usr/share/argvus/lock/config/hyprlock.conf"
 	test -x "${source_root}/src/usr/share/argvus/lock/sh/hyprlock-theme.sh"
-	theme_directories="$(find "$themes_root" -mindepth 1 -maxdepth 1 -type d | wc -l)"
-	theme_configs="$(find "$themes_root" -mindepth 2 -maxdepth 2 -type f -name hyprlock.conf | wc -l)"
-	test "$theme_directories" -gt 0
-	test "$theme_configs" -eq "$theme_directories"
+	test -f "${source_root}/src/usr/share/argvus/lock/theme-template/hyprlock.conf"
+	test -f "${source_root}/src/usr/share/argvus/theme/consumers.d/lock.toml"
 }
 
 arch_package_lock_payload() {

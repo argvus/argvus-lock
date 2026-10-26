@@ -21,8 +21,9 @@ helper for the ARGVUS desktop environment.
 This repository owns the files installed below `/usr/share/argvus/lock/`:
 
 - `config/hyprlock.conf`;
-- `config/themes/*/hyprlock.conf`; and
-- `sh/hyprlock-theme.sh`.
+- `theme-template/hyprlock.conf`, the lock screen template every theme is
+  rendered through (registered in `/usr/share/argvus/theme/consumers.d/lock.toml`); and
+- `sh/hyprlock-theme.sh`, which assembles the active lock screen from the theme build.
 
 `argvus-appearance` owns shared visual inputs such as wallpaper, active-theme,
 and accent-color state. `argvus-power` owns idle timeout, lock-menu, suspend,
