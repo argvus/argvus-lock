@@ -39,9 +39,10 @@ read_state() {
 }
 
 canonical_theme_id() {
+  case "$1" in *-float) set -- "${1%-float}-spaced" ;; esac
   case "$1" in
     argvus-catppuccin-latte|argvus-light-catppuccin-latte) printf '%s\n' "catppuccin-latte" ;;
-    argvus-catppuccin-latte-float|argvus-light-catppuccin-latte-float) printf '%s\n' "catppuccin-latte-float" ;;
+    argvus-catppuccin-latte-spaced|argvus-light-catppuccin-latte-spaced) printf '%s\n' "catppuccin-latte-spaced" ;;
     *) printf '%s\n' "$1" ;;
   esac
 }
