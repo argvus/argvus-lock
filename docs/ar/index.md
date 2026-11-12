@@ -1,5 +1,5 @@
 ---
-title: Lock screen
+title: قفل الشاشة
 description:                              .Hyprlock ﻰﻠﻋ ﺔﻤﺋﺎﻘﻟﺍ ARGVUS ﻞﻔﻘﻟﺍ ﺔﺷﺎﺷ ﻦﻳﻮﻜﺘﺑ ﻢﻗ
 ---
 

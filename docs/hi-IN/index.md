@@ -1,5 +1,5 @@
 ---
-title: Lock screen
+title: लॉक स्क्रीन
 description: Hyprlock-आधारित ARGVUS लॉक स्क्रीन को कॉन्फ़िगर करें।
 ---
 

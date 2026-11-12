@@ -1,5 +1,5 @@
 ---
-title: Lock screen
+title: Tela de bloqueio
 description: Configure o lock screen baseado em Hyprlock.
 ---
 

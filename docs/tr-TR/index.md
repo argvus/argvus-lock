@@ -1,5 +1,5 @@
 ---
-title: Lock screen
+title: Kilit ekranı
 description: Hyprlock tabanlı ARGVUS kilit ekranını yapılandırın.
 ---
 

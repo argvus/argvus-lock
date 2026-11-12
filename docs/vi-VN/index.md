@@ -1,5 +1,5 @@
 ---
-title: Lock screen
+title: Màn hình khóa
 description: Cấu hình màn hình khóa ARGVUS dựa trên Hyprlock.
 ---
 

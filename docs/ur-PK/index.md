@@ -1,5 +1,5 @@
 ---
-title: Lock screen
+title: لاک اسکرین
 description: Hyprlock ﺮﭘ ﺩﺎﯿﻨﺑ ﯽﮐ ARGVUS ۔ﮟﯾﺩ ﺐﯿﺗﺮﺗ ﻮﮐ ﻦﯾﺮﮑﺳﺍ ﮎﻻ﻿
 ---
 

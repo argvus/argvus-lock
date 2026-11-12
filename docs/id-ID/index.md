@@ -1,5 +1,5 @@
 ---
-title: Lock screen
+title: Layar kunci
 description: Konfigurasikan layar kunci ARGVUS berbasis Hyprlock.
 ---
 
