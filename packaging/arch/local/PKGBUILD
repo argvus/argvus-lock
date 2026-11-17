@@ -14,7 +14,8 @@ depends=(
   'ttf-jetbrains-mono-nerd'
   'ttf-nerd-fonts-symbols-mono'
 )
-optdepends=('argvus-power: idle lock, lock menu and DPMS policy integration')
+optdepends=('argvus-power: idle lock and DPMS policy integration'
+            'imagemagick: blurred lock wallpaper generation')
 options=('!debug')
 source=("${pkgname}-${pkgver}.tar.gz")
 sha256sums=()

@@ -64,3 +64,5 @@ packaging layout.
 ## License
 
 SPDX: `GPL-3.0-only`. See [LICENSE](LICENSE).
+
+Use `argvus lock` to prepare the active theme and start Hyprlock.

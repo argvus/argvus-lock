@@ -6,3 +6,5 @@ description:                              .Hyprlock ﻰﻠﻋ ﺔﻤﺋﺎﻘﻟ
 `argvus-lock`                     ﺖﺤﺗ ﺓﺄﺒﻌﻤﻟﺍ ﻪﺗﺎﻔﻠﻣ ﻊﻘﺗ .ﺕﺎﻤﺴﻟﺍ ﺪﻋﺎﺴﻣﻭ Hyprlock ﻦﻳﻮﻜﺗ ﺩﻭﺰﻳ`/usr/share/argvus/lock/config/` and `/usr/share/argvus/lock/sh/`.
 
 `argvus-power`.ﻞﻔﻘﻟﺍ ﺔﺷﺎﺷ ﺮﻬﻈﻣ ءﺎﺸﻧﺇ ﺓﺩﺎﻋﺇ ﻰﻠﻋ ﺕﺎﻤﺴﻟﺍ ﺕﺍﺮﻴﻴﻐﺗ ﻞﻤﻌﺗ .DPMS ﺕﺍءﺍﺮﺟﺇﻭ ﻞﻔﻘﻟﺍ ﺕﺍءﺍ
+
+`argvus lock` · Hyprlock

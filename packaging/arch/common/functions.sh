@@ -32,6 +32,7 @@ arch_check_lock_payload() {
 	local source_root="${srcdir}/${pkgname}-${pkgver}"
 
 	test -f "${source_root}/src/usr/share/argvus/lock/config/hyprlock.conf"
+	test -x "${source_root}/src/usr/share/argvus/lock/sh/lock-session.sh" || return 1
 	test -x "${source_root}/src/usr/share/argvus/lock/sh/hyprlock-theme.sh"
 	test -f "${source_root}/src/usr/share/argvus/lock/theme-template/hyprlock.conf"
 	test -f "${source_root}/src/usr/share/argvus/theme/consumers.d/lock.toml"
